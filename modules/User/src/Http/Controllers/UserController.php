@@ -23,10 +23,10 @@ class UserController extends Controller {
 
         return DataTables::of($users)
         ->addColumn('edit', function ($users) {
-            return '<a href="'.route('admin.useres.edit', $users).'" class="btn btn-warning">Sửa</a>';
+            return '<a href="'.route('admin.users.edit', $users).'" class="btn btn-warning">Sửa</a>';
         })
         ->addColumn('delete', function ($users) {
-            return '<a href="#" class="btn btn-danger">Xóa</a>';
+            return '<a href="'.route('admin.users.delete', $users).'" class="btn btn-danger delete-action">Xóa</a>';
         })
         ->editColumn('created_at', function ($users) {
             return Carbon::parse($users->created_at)->format('d/m/Y H:i:s');
@@ -69,8 +69,12 @@ class UserController extends Controller {
 
         $this->userRepository->update($id, $data);
 
-        return back()->with('msg', __('user::messages.update.success'));
-        
+        return back()->with('msg', __('user::messages.update.success'));     
+    }
+
+    public function delete($id) {
+        $this->userRepository->delete($id);
+        return back()->with('msg', __('user::messages.delete.success'));     
     }
 
 }

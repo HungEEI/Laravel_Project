@@ -23,6 +23,7 @@
                     </tr>
                 </thead>
             </table>
+            @include('parts.backend.delete')
         </div>
     </div>
 </div>

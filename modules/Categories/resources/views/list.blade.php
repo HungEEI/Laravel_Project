@@ -10,13 +10,12 @@
     @endif
     <div class="card-body">
         <div class="table-responsive">
-            <a href="{{route('admin.users.add')}}" class="btn btn-primary mb-3">Thêm mới</a>
+            <a href="{{route('admin.categories.add')}}" class="btn btn-primary mb-3">Thêm mới</a>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>Tên</th>
-                        <th>Email</th>
-                        <th>Nhóm</th>
+                        <th>Link</th>
                         <th>Thời gian</th>
                         <th>Sửa</th>
                         <th>Xóa</th>
@@ -33,14 +32,13 @@
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
-                autoAWith: false,
+                autoWith: false,
                 processing: true,
                 serverSide: true,
-                ajax: '{{route('admin.users.data')}}',
+                ajax: '{{route('admin.categories.data')}}',
                 columns: [
                     { data: 'name' },
-                    { data: 'email' },
-                    { data: 'group_id' },
+                    { data: 'link' },
                     { data: 'created_at' },
                     { data: 'edit' },
                     { data: 'delete' }

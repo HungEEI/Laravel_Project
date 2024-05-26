@@ -21,3 +21,8 @@
 
 ### Tạo FormRequest và các phương thức Validation
 ### Viết chức năng thêm User
+### Viết chức năng hiển thị User
+### Viết chức năng cập nhật User
+### Viết chức năng xóa User
+
+### Xây dựng Module quản lý danh mục

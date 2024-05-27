@@ -10,7 +10,7 @@
     @endif
     <div class="card-body">
         <div class="table-responsive">
-            <a href="{{route('admin.categories.add')}}" class="btn btn-primary mb-3">Thêm mới</a>
+            <a href="{{route('admin.categories.add')}}" class="btn btn-primary mb-3">Thêm danh mục</a>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
@@ -35,6 +35,7 @@
                 autoWith: false,
                 processing: true,
                 serverSide: true,
+                pageLength: 2,
                 ajax: '{{route('admin.categories.data')}}',
                 columns: [
                     { data: 'name' },

@@ -7,4 +7,7 @@ interface CategoriesRepositoryInterface extends RepositoryInterface {
 
     public function getCategories();
 
+    public function getAllCategories();
+
+
 }

@@ -7,7 +7,7 @@
         <div class="col-6">
             <div class="mb-3">
                 <label for="">Tên</label>
-                <input type="text" name="name" class="form-control{{$errors->has('name')?' is-invalid':''}}" placeholder="Tên...">
+                <input type="text" name="name" class="form-control{{$errors->has('name')?' is-invalid':''}} title" placeholder="Tên...">
                 @error('name')                 
                 <div class="invalid-feedback">
                     {{$message}}
@@ -18,7 +18,7 @@
         <div class="col-6">
             <div class="mb-3">
                 <label for="">Slug</label>
-                <input type="text" name="slug" class="form-control{{$errors->has('slug')?' is-invalid':''}}" placeholder="Slug...">
+                <input type="text" name="slug" class="form-control{{$errors->has('slug')?' is-invalid':''}} slug" placeholder="Slug...">
                 @error('slug')                 
                 <div class="invalid-feedback">
                     {{$message}}
@@ -31,6 +31,7 @@
                 <label for="">Cha</label>
                 <select name="parent_id" id="" class="form-control{{$errors->has('parent_id')?' is-invalid':''}}">
                     <option value="0">Không</option>
+                    {{getCategories($categories, old('parent_id'))}}
                 </select>
                 @error('parent_id')                 
                 <div class="invalid-feedback">

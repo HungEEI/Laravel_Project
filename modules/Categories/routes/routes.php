@@ -13,8 +13,8 @@ Route::group(['namespace' => 'Modules\Categories\src\Http\Controllers', 'middlew
 
             Route::post('/add', 'CategoriesController@store')->name('store');
 
-            Route::get('edit/{Category}', 'CategoriesController@edit')->name('edit');
-            Route::put('edit/{Category}', 'CategoriesController@update')->name('update');
+            Route::get('edit/{category}', 'CategoriesController@edit')->name('edit');
+            Route::put('edit/{category}', 'CategoriesController@update')->name('update');
 
             Route::delete('delete/{Category}', 'CategoriesController@delete')->name('delete');
         });

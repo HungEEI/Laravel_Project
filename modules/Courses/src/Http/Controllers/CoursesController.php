@@ -31,7 +31,22 @@ class CoursesController extends Controller {
         ->editColumn('created_at', function ($course) {
             return Carbon::parse($course->created_at)->format('d/m/Y H:i:s');
         })
-        ->rawColumns(['edit', 'delete'])
+        ->editColumn('status', function ($course) {
+            return $course->status == 1 ? '<button class="btn btn-success">Đã ra mắt</button>' : '<button class="btn btn-warning">Chưa ra mắt</button>';
+        })
+        ->editColumn('price', function ($course) {
+            if ($course->price) {
+                if ($course->sale_price) {
+                    $price = number_format($course->sale_price).'đ';
+                }else {
+                    $price = number_format($course->price).'đ';
+                }
+            }else {
+                $price = 'Miễn phí';
+            }
+            return $price;
+        })
+        ->rawColumns(['edit', 'delete', 'status'])
         ->toJson();
     }
 
@@ -42,8 +57,15 @@ class CoursesController extends Controller {
 
     public function store(CoursesRequest $request) {
         
-
-        // return redirect()->route('admin.courses.index')->with('msg', __('user::messages.add.success'));
+        $course = $request->except(['_token']);
+        if (!$course['sale_price']) {
+            $course['sale_price'] = 0;
+        }
+        if (!$course['price']) {
+            $course['price'] = 0;
+        }
+        $this->coursesRepository->create($course);
+        return redirect()->route('admin.courses.index')->with('msg', __('courses::messages.add.success'));
     }
 
     public function edit($id) {
@@ -53,12 +75,19 @@ class CoursesController extends Controller {
             abort(404);
         }
 
-        return view('courses::edit', compact('user', 'pageTitle'));
+        return view('courses::edit', compact('course', 'pageTitle'));
     }
 
     public function update(CoursesRequest $request, $id) {
-
-        return back()->with('msg', __('user::messages.update.success'));     
+        $course = $request->except(['_token', '_method']);
+        if (!$course['sale_price']) {
+            $course['sale_price'] = 0;
+        }
+        if (!$course['price']) {
+            $course['price'] = 0;
+        }
+        $this->coursesRepository->update($id, $course);
+        return back()->with('msg', __('courses::messages.update.success'));     
     }
 
     public function delete($id) {

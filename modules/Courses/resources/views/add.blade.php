@@ -104,7 +104,7 @@
         <div class="col-12">
             <div class="mb-3">
                 <label for="">Nội dung</label>
-                <textarea name="detail" class="form-control{{$errors->has('detail')?' is-invalid':''}}" placeholder="Nội dung..."></textarea>
+                <textarea name="detail" class="form-control ckeditor {{$errors->has('detail')?' is-invalid':''}}" placeholder="Nội dung..."></textarea>
                 @error('detail')                 
                 <div class="invalid-feedback">
                     {{$message}}
@@ -128,7 +128,7 @@
                 <div class="row align-items-end">
                     <div class="col-7">
                         <label for="">Ảnh đại diện</label>
-                        <input type="text" name="thumbnail" class="form-control{{$errors->has('thumbnail')?' is-invalid':''}}" placeholder="Ảnh đại diện...">
+                        <input type="text" name="thumbnail" class="form-control{{$errors->has('thumbnail')?' is-invalid':''}}" placeholder="Ảnh đại diện..." id="thumbnail">
                         @error('thumbnail')                 
                         <div class="invalid-feedback">
                             {{$message}}
@@ -136,12 +136,12 @@
                         @enderror
                     </div>
                     <div class="col-2">
-                        <button type="button" class="btn btn-primary">
+                        <button type="button" id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
                             <i class="fa fa-save"></i> Chọn Ảnh
                         </button>
                     </div>
                     <div class="col-3">
-                        <img src="https://fastly.picsum.photos/id/20/3670/2462.jpg?hmac=CmQ0ln-k5ZqkdtLvVO23LjVAEabZQx2wOaT4pyeG10I" alt="">
+                        <div id="holder"></div>
                     </div>
                 </div>
             </div>
@@ -159,7 +159,11 @@
     <style>
         img {
             max-width: 100%;
-            height: auto;
+            height: auto !important;
+        }
+
+        #holder img {
+            width: 100%
         }
     </style>
 @endsection

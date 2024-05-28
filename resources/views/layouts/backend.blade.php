@@ -107,7 +107,7 @@
     <!-- Custom scripts for all pages-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{asset('backend/js/sb-admin-2.min.js')}}"></script>
-
+    
     <!-- Page level plugins -->
     <script src="{{asset('backend/vendor/chart.js/Chart.min.js')}}"></script>
     
@@ -115,6 +115,11 @@
     <script src="{{asset('backend/js/demo/chart-area-demo.js')}}"></script>
     <script src="{{asset('backend/js/demo/chart-pie-demo.js')}}"></script>
     <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
+    <script src="{{asset('backend/plugins/ckeditor/ckeditor.js')}}"></script>
+    <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+    <script>
+        $('#lfm').filemanager('image');
+    </script>
     @yield('scripts')
 </body>
 

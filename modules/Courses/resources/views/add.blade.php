@@ -112,6 +112,21 @@
                 @enderror
             </div>
         </div>
+
+        <div class="col-3">
+            <div class="mb-3">
+                <label for="">Chuyên mục</label>
+                <div class="list-categories">
+                    {{getCategoriesCheckBox($allCategories)}}
+                </div>
+                @error('categories')                 
+                    <div class="invalid-feedback d-block">
+                        {{$message}}
+                    </div>
+                @enderror
+            </div>
+        </div>
+
         <div class="col-12">
             <div class="mb-3">
                 <label for="">Hỗ trợ</label>
@@ -168,6 +183,11 @@
 
         #holder img {
             width: 100%
+        }
+
+        .list-categories {
+            max-height: 200px;
+            overflow: auto;
         }
     </style>
 @endsection

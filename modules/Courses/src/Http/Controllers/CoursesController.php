@@ -2,6 +2,7 @@
 namespace Modules\Courses\src\Http\Controllers;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
+use Modules\Categories\src\Repositories\CategoriesRepository;
 use Yajra\DataTables\Facades\DataTables;
 use Modules\Courses\src\Http\Requests\CoursesRequest;
 use Modules\Courses\src\Repositories\CoursesRepository;
@@ -9,8 +10,10 @@ use Modules\Courses\src\Repositories\CoursesRepository;
 class CoursesController extends Controller {
 
     protected $coursesRepository;
-    public function __construct(CoursesRepository $coursesRepository) {
+    protected $categoriesRepository;
+    public function __construct(CoursesRepository $coursesRepository, CategoriesRepository $categoriesRepository) {
         $this->coursesRepository = $coursesRepository;
+        $this->categoriesRepository = $categoriesRepository;
     }
 
     public function index() {
@@ -52,19 +55,29 @@ class CoursesController extends Controller {
 
     public function add() {
         $pageTitle = "Thêm khóa học";
-        return view('courses::add', compact('pageTitle'));
+
+        $allCategories = $this->categoriesRepository->getAllCategories();
+
+        return view('courses::add', compact('pageTitle', 'allCategories'));
     }
 
     public function store(CoursesRequest $request) {
         
-        $course = $request->except(['_token']);
-        if (!$course['sale_price']) {
-            $course['sale_price'] = 0;
+        $courses = $request->except(['_token']);
+        if (!$courses['sale_price']) {
+            $courses['sale_price'] = 0;
         }
-        if (!$course['price']) {
-            $course['price'] = 0;
+        if (!$courses['price']) {
+            $courses['price'] = 0;
         }
-        $this->coursesRepository->create($course);
+
+        $course = $this->coursesRepository->create($courses);
+        $categories = [];
+        foreach ($courses['categories'] as $category) {
+            $categories[$category] = ['created_at' => Carbon::now()->format('Y-m-d H:i:s'), 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')];
+        }
+        $this->coursesRepository->createCourseCategories($course, $categories);
+
         return redirect()->route('admin.courses.index')->with('msg', __('courses::messages.add.success'));
     }
 

@@ -34,7 +34,8 @@ class CoursesRequest extends FormRequest
             'code' => 'required|max:255',
             'is_document' => 'required|integer',
             'supports' => 'required',
-            'status' => 'required|integer'
+            'status' => 'required|integer',
+            'categories' => 'required'
         ];
 
         return $rules;

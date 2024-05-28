@@ -43,7 +43,7 @@ class CoursesController extends Controller {
     public function store(CoursesRequest $request) {
         
 
-        return redirect()->route('admin.courses.index')->with('msg', __('user::messages.add.success'));
+        // return redirect()->route('admin.courses.index')->with('msg', __('user::messages.add.success'));
     }
 
     public function edit($id) {

@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class CoursesRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Determine if the courses is authorized to make this request.
      */
     public function authorize(): bool
     {
@@ -21,46 +21,37 @@ class CoursesRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route()->course;
         $rules = [
             'name' => 'required|max:255',
-            'email' => 'required:|email|unique:users,email',
-            'password' => 'required|min:6',
-            'group_id' => ['required', 'integer', function($attribute, $value, $fail) {
+            'slug' => 'required|max:255',
+            'detail' => 'required',
+            'teacher_id' => ['required', 'integer', function($attribute, $value, $fail) {
                 if ($value == 0) {
-                    $fail(__('user::validation.select'));
+                    $fail(__('courses::validation.select'));
                 }
             }],
+            'thumbnail' => 'required|max:255',
+            'code' => 'required|max:255',
+            'is_document' => 'required|integer',
+            'supports' => 'required',
+            'status' => 'required|integer'
         ];
-
-        if ($id) {
-            $rules['email'] = 'required:|email|unique:users,email,'.$id;
-            if ($this->password) {
-                $rules['password'] = 'min:6';
-            }else {
-                unset($rules['password']);
-            }
-        }
 
         return $rules;
     }
 
     public function messages() {
         return [
-            'required' => __('user::validation.required'),
-            'email' => __('user::validation.email'),
-            'unique' => __('user::validation.unique'),
-            'min' => __('user::validation.min'),
-            'integer' => __('user::validation.integer')
+            'required' => __('courses::validation.required'),
+            'slug' => __('courses::validation.slug'),
+            'unique' => __('courses::validation.unique'),
+            'min' => __('courses::validation.min'),
+            'max' => __('courses::validation.max'),
+            'integer' => __('courses::validation.integer')
         ];
     }
 
     public function attributes() {
-        return [
-            'name' => __('user::validation.attributes.name'),
-            'email' => __('user::validation.attributes.email'),
-            'password' => __('user::validation.attributes.password'),
-            'group_id' => __('user::validation.attributes.group_id')
-        ];
+        return __('courses::validation.attributes');
     }
 }

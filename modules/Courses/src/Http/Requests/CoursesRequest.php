@@ -20,10 +20,17 @@ class CoursesRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
+    {   
+        $id = $this->route()->course;
+
+        $uiqueRule = 'unique:courses,code';
+        if ($id) {
+            $uiqueRule.=','.$id;
+        }
+;
         $rules = [
             'name' => 'required|max:255',
-            'slug' => 'required|max:255',
+            'slug' => 'required|max:255|',
             'detail' => 'required',
             'teacher_id' => ['required', 'integer', function($attribute, $value, $fail) {
                 if ($value == 0) {
@@ -31,7 +38,7 @@ class CoursesRequest extends FormRequest
                 }
             }],
             'thumbnail' => 'required|max:255',
-            'code' => 'required|max:255',
+            'code' => 'required|max:255|'.$uiqueRule,
             'is_document' => 'required|integer',
             'supports' => 'required',
             'status' => 'required|integer',

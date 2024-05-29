@@ -72,10 +72,8 @@ class CoursesController extends Controller {
         }
 
         $course = $this->coursesRepository->create($courses);
-        $categories = [];
-        foreach ($courses['categories'] as $category) {
-            $categories[$category] = ['created_at' => Carbon::now()->format('Y-m-d H:i:s'), 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')];
-        }
+        $categories = $this->getCategories($courses);
+
         $this->coursesRepository->createCourseCategories($course, $categories);
 
         return redirect()->route('admin.courses.index')->with('msg', __('courses::messages.add.success'));
@@ -83,12 +81,16 @@ class CoursesController extends Controller {
 
     public function edit($id) {
         $pageTitle = 'Cập nhật khóa học';
+
         $course = $this->coursesRepository->find($id);
+        $categoryIds = $this->coursesRepository->getRelatedCategoies($course);
+        $allCategories = $this->categoriesRepository->getAllCategories();
+
         if (!$course) {
             abort(404);
         }
 
-        return view('courses::edit', compact('course', 'pageTitle'));
+        return view('courses::edit', compact('course', 'pageTitle', 'allCategories', 'categoryIds'));
     }
 
     public function update(CoursesRequest $request, $id) {
@@ -100,11 +102,30 @@ class CoursesController extends Controller {
             $course['price'] = 0;
         }
         $this->coursesRepository->update($id, $course);
+        $categories = $this->getCategories($course);
+
+        $course = $this->coursesRepository->find($id);
+
+        $this->coursesRepository->updateCourseCategories($course, $categories);
+
         return back()->with('msg', __('courses::messages.update.success'));     
     }
 
     public function delete($id) {
+
+        $course = $this->coursesRepository->find($id);
+        $this->coursesRepository->deleteCourseCategories($course);
         $this->coursesRepository->delete($id);
+
         return back()->with('msg', __('courses::messages.delete.success'));     
+    }
+
+    public function getCategories($courses) {
+        $categories = [];
+        foreach ($courses['categories'] as $category) {
+            $categories[$category] = ['created_at' => Carbon::now()->format('Y-m-d H:i:s'), 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')];
+        }
+
+        return $categories;
     }
 }

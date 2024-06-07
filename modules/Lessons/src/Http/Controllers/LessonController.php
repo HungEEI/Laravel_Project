@@ -2,24 +2,25 @@
 namespace Modules\Lessons\src\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Modules\Lessons\src\Http\Requests\LessonRequest;
 use Modules\Video\src\Repositories\VideoRepositoryInterface;
 use Modules\Courses\src\Repositories\CoursesRepositoryInterface;
+use Modules\Lessons\src\Repositories\LessonsRepositoryInterface;
 use Modules\Document\src\Repositories\DocumentRepositoryInterface;
 
 class LessonController extends Controller {
 
-    protected $coursesRepository, $videoRepository, $documentRepository;
+    protected $coursesRepository, $videoRepository, $documentRepository, $lessonsRepository;
     public function __construct(
             CoursesRepositoryInterface $coursesRepository,
             VideoRepositoryInterface $videoRepository,
-            DocumentRepositoryInterface $documentRepository
+            DocumentRepositoryInterface $documentRepository,
+            LessonsRepositoryInterface $lessonsRepository
         ) {
         $this->coursesRepository = $coursesRepository;
         $this->videoRepository = $videoRepository;
         $this->documentRepository = $documentRepository;
+        $this->lessonsRepository = $lessonsRepository;
     }
 
     public function index($courseId) {
@@ -33,22 +34,46 @@ class LessonController extends Controller {
         return view('lessons::add', compact('pageTitle', 'courseId'));
     }
 
-    public function store(LessonRequest $request) {
+    public function store($courseId, LessonRequest $request) {
+
+        $name = $request->name;
+        $slug = $request->slug;
         $video = $request->video;
-        $getID3 = new \getID3;
-        $path = Storage::disk('public')->path(str_replace('storage', '', $request->video));
-        $file = $getID3->analyze($path);
-        dd($file);
-        $result = $this->videoRepository->createVideo(['url' => $video]);
+        $document = $request->document;
+        $patentId = $request->patent_id == 0 ? null : $request->patent_id;
+        $isTrial = $request->is_trial;
+        $position = $request->position;
+        $description = $request->description;
+        $videoInfo = getVideoInfo($video);
+        $documentId = null;
+        $videoId = null;
 
-        // $path = Storage::disk('public')->path(str_replace('storage', '', $request->document));
-        // $name = basename($request->document);
+        if ($document) {
+            $documentInfo = getFileInfo($document);
+            $document = $this->documentRepository->createDocument([
+                'url' => $document, 
+                'name' => $documentInfo['name'], 
+                'size' => $documentInfo['size']
+            ], $document);
+            $documentId = $document ? $document->id : null;
+        }
 
-        // $size = File::size($path);
+        $video = $this->videoRepository->createVideo(['url' => $video, 'name' => $videoInfo['filename'], 'size' => $videoInfo['playtime_seconds']], $video);
+        $videoId = $video ? $video->id : null;
 
-        // $result = $this->documentRepository->createDocument(['name' => $name, 'url' => $request->document]);
-
-        // return $result;
+        $this->lessonsRepository->create([
+            'name' => $name, 
+            'slug' => $slug, 
+            'video_id' => $videoId, 
+            'document_id' => $documentId, 
+            'patent_id' => $patentId, 
+            'is_trial' => $isTrial,
+            'position' => $position, 
+            'durations' => $videoInfo['playtime_seconds'] ?? 0,
+            'description' => $description
+        ]);
+        return redirect()->route('admin.lessons.add', $courseId)->with('msg' , __('lessons::messages.add.success'));
+    
     }
 
 }

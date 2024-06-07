@@ -11,8 +11,8 @@ class DocumentRepository extends BaseRepository implements DocumentRepositoryInt
         return Document::class;
     }
 
-    public function createDocument($data) {
-        return $this->model->firstOrCreate($data);
+    public function createDocument($data, $url) {
+        return $this->model->firstOrCreate(['url' => $url], $data);
     }
 
 }

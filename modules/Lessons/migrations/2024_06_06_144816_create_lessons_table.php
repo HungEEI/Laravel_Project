@@ -21,7 +21,7 @@ return new class extends Migration
             $table->boolean('is_trial')->default(false);
             $table->integer('view')->default(0);
             $table->integer('position')->default(0);
-            $table->float('duration');
+            $table->float('durations')->default(0);
             $table->text('description')->nullable();
             $table->timestamps();
         });

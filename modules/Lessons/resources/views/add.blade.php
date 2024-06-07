@@ -1,6 +1,9 @@
 @extends('layouts.backend')
 
 @section('content')
+@if (session('msg'))
+<div class="alert alert-success text-center">{{session('msg')}}</div>
+@endif
 <form action="" method="post">
     <div class="row">
 

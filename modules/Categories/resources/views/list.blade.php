@@ -3,7 +3,7 @@
 @section('content')
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Danh sách người dùng</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách chuyên mục</h6>
     </div>
     @if (session('msg'))
         <div class="alert alert-success text-center">{{session('msg')}}</div>

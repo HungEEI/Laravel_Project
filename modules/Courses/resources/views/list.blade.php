@@ -3,7 +3,7 @@
 @section('content')
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Danh sách người dùng</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách khóa học</h6>
     </div>
     @if (session('msg'))
         <div class="alert alert-success text-center">{{session('msg')}}</div>
@@ -18,6 +18,7 @@
                         <th>Giá</th>
                         <th>Trạng thái</th>
                         <th>Thời gian</th>
+                        <th>Bài giảng</th>
                         <th>Sửa</th>
                         <th>Xóa</th>
                     </tr>
@@ -42,6 +43,7 @@
                     { data: 'price' },
                     { data: 'status' },
                     { data: 'created_at' },
+                    { data: 'lessions' },
                     { data: 'edit' },
                     { data: 'delete' }
                 ]

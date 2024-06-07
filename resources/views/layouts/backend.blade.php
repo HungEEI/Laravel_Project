@@ -117,8 +117,12 @@
     <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
     <script src="{{asset('backend/plugins/ckeditor/ckeditor.js')}}"></script>
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+    <script src="{{asset('backend/js/scripts.js')}}"></script>
     <script>
         $('#lfm').filemanager('image');
+        $('#lfm-file').filemanager('file');
+        $('#lfm-video').filemanager('video');
+        $('#lfm-document').filemanager('document');
     </script>
     @yield('scripts')
 </body>

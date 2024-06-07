@@ -7,9 +7,11 @@
     "require": {
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",
+        "james-heinrich/getid3": "^1.9",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "laravel/ui": "^4.5",
         "unisharp/laravel-filemanager": "^2.9",
         "yajra/laravel-datatables-oracle": "^10.11",
         "yaza/laravel-repository-service": "4.0"
@@ -32,7 +34,11 @@
         "classmap": [
             "database/seeders",
             "database/migrations"
+        ],
+        "files": [
+            "app/Helpers/function.php"
         ]
+        
     },
     "autoload-dev": {
         "psr-4": {

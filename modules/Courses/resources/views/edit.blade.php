@@ -34,7 +34,11 @@
                 <label for="">Giảng viên</label>
                 <select name="teacher_id" id="" class="form-control{{$errors->has('teacher_id')?' is-invalid':''}}">
                     <option value="0" {{old('teacher_id') == 0 || $course->teacher_id == 0 ? 'selected' : false}}>Chọn giảng viên</option>
-                    <option value="1" {{old('teacher_id') == 1 || $course->teacher_id == 1 ? 'selected' : false}}>Văn Hùng</option>
+                    @if ($teacher)
+                        @foreach ($teacher as $item)
+                            <option value="{{$item->id}}" {{old('teacher_id') == $item->id || $course->teacher_id == $item->id? 'selected' : false}}>{{$item->name}}</option>
+                        @endforeach
+                    @endif
                 </select>
                 @error('teacher_id')                 
                 <div class="invalid-feedback">
@@ -160,8 +164,8 @@
                     </div>
                     <div class="col-3">
                         <div id="holder">
-                            @if (old('thumbnail'))
-                                <img src="{{old('thumbnail') ?? $course->thumbnail}}" alt="">
+                            @if (old('thumbnail') || $course->thumbnail)
+                                <img style="height: 5rem" src="{{old('thumbnail') ?? $course->thumbnail}}" alt="">
                             @endif
                         </div>
                     </div>
@@ -177,16 +181,20 @@
     @method('PUT')
 </form>
 @endsection
-
 @section('stylesheets') 
     <style>
-        img {
+        /* img {
             max-width: 100%;
             height: auto !important;
         }
 
         #holder img {
             width: 100%
+        } */
+
+        .list-categories {
+            max-height: 200px;
+            overflow: auto;
         }
     </style>
 @endsection

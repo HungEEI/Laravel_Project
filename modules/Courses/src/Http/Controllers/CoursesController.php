@@ -2,18 +2,30 @@
 namespace Modules\Courses\src\Http\Controllers;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
-use Modules\Categories\src\Repositories\CategoriesRepository;
 use Yajra\DataTables\Facades\DataTables;
 use Modules\Courses\src\Http\Requests\CoursesRequest;
 use Modules\Courses\src\Repositories\CoursesRepository;
+use Modules\Teachers\src\Repositories\TeachersRepository;
+use Modules\Categories\src\Repositories\CategoriesRepository;
+use Modules\Courses\src\Repositories\CoursesRepositoryInterface;
+use Modules\Teachers\src\Repositories\TeachersRepositoryInterface;
+use Modules\Categories\src\Repositories\CategoriesRepositoryInterface;
 
 class CoursesController extends Controller {
 
     protected $coursesRepository;
     protected $categoriesRepository;
-    public function __construct(CoursesRepository $coursesRepository, CategoriesRepository $categoriesRepository) {
+    protected $teachersRepository;
+
+    public function __construct(
+        CoursesRepositoryInterface $coursesRepository, 
+        CategoriesRepositoryInterface $categoriesRepository, 
+        TeachersRepositoryInterface $teachersRepository
+        ) 
+    {
         $this->coursesRepository = $coursesRepository;
         $this->categoriesRepository = $categoriesRepository;
+        $this->teachersRepository = $teachersRepository;
     }
 
     public function index() {
@@ -25,6 +37,9 @@ class CoursesController extends Controller {
         $courses = $this->coursesRepository->getAllCourses();
 
         return DataTables::of($courses)
+        ->addColumn('lessions', function ($course) {
+            return '<a href="'.route('admin.lessons.index', $course).'" class="btn btn-primary">Bài giảng</a>';
+        })
         ->addColumn('edit', function ($course) {
             return '<a href="'.route('admin.courses.edit', $course).'" class="btn btn-warning">Sửa</a>';
         })
@@ -49,7 +64,7 @@ class CoursesController extends Controller {
             }
             return $price;
         })
-        ->rawColumns(['edit', 'delete', 'status'])
+        ->rawColumns(['edit', 'delete', 'status', 'lessions'])
         ->toJson();
     }
 
@@ -58,7 +73,9 @@ class CoursesController extends Controller {
 
         $allCategories = $this->categoriesRepository->getAllCategories();
 
-        return view('courses::add', compact('pageTitle', 'allCategories'));
+        $teacher = $this->teachersRepository->getAllTeachers()->get();
+
+        return view('courses::add', compact('pageTitle', 'allCategories', 'teacher'));
     }
 
     public function store(CoursesRequest $request) {
@@ -85,12 +102,13 @@ class CoursesController extends Controller {
         $course = $this->coursesRepository->find($id);
         $categoryIds = $this->coursesRepository->getRelatedCategoies($course);
         $allCategories = $this->categoriesRepository->getAllCategories();
+        $teacher = $this->teachersRepository->getAllTeachers()->get();
 
         if (!$course) {
             abort(404);
         }
 
-        return view('courses::edit', compact('course', 'pageTitle', 'allCategories', 'categoryIds'));
+        return view('courses::edit', compact('course', 'pageTitle', 'allCategories', 'categoryIds', 'teacher'));
     }
 
     public function update(CoursesRequest $request, $id) {
@@ -114,7 +132,7 @@ class CoursesController extends Controller {
     public function delete($id) {
 
         $course = $this->coursesRepository->find($id);
-        $this->coursesRepository->deleteCourseCategories($course);
+        // $this->coursesRepository->deleteCourseCategories($course);
         $this->coursesRepository->delete($id);
 
         return back()->with('msg', __('courses::messages.delete.success'));     

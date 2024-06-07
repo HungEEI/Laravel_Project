@@ -19,8 +19,8 @@ return new class extends Migration
 
 
             // Thêm khóa ngoại 
-            $table->foreign('category_id')->references('id')->on('categories');
-            $table->foreign('course_id')->references('id')->on('courses');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
         });
 
 

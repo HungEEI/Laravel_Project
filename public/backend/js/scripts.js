@@ -9,6 +9,8 @@
 
 window.addEventListener('DOMContentLoaded', event => {
 
+    $('.select2').select2();
+
     // Toggle the side navigation
     const sidebarToggle = document.body.querySelector('#sidebarToggle');
     if (sidebarToggle) {

@@ -1,6 +1,7 @@
 <?php
 namespace Modules\Lessons\src\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Modules\Lessons\src\Http\Requests\LessonRequest;
 use Modules\Video\src\Repositories\VideoRepositoryInterface;
@@ -29,18 +30,19 @@ class LessonController extends Controller {
         return view('lessons::list', compact('pageTitle', 'course'));
     }
 
-    public function add($courseId) {
+    public function add(Request $request, $courseId) {
         $pageTitle = "Thêm bài giảng";
-        return view('lessons::add', compact('pageTitle', 'courseId'));
+        $position = $this->lessonsRepository->getPosition($courseId);
+        $lessons = $this->lessonsRepository->getAllLessions()->toArray();
+        return view('lessons::add', compact('pageTitle', 'courseId', 'position', 'lessons'));
     }
 
     public function store($courseId, LessonRequest $request) {
-
         $name = $request->name;
         $slug = $request->slug;
         $video = $request->video;
         $document = $request->document;
-        $patentId = $request->patent_id == 0 ? null : $request->patent_id;
+        $parentId = $request->parent_id == 0 ? null : $request->parent_id;
         $isTrial = $request->is_trial;
         $position = $request->position;
         $description = $request->description;
@@ -57,16 +59,19 @@ class LessonController extends Controller {
             ], $document);
             $documentId = $document ? $document->id : null;
         }
-
-        $video = $this->videoRepository->createVideo(['url' => $video, 'name' => $videoInfo['filename'], 'size' => $videoInfo['playtime_seconds']], $video);
-        $videoId = $video ? $video->id : null;
+        if ($video) {
+            $videoInfo = getVideoInfo($video);
+            $video = $this->videoRepository->createVideo(['url' => $video, 'name' => $videoInfo['filename'], 'size' => $videoInfo['playtime_seconds']], $video);
+            $videoId = $video ? $video->id : null;
+        }
 
         $this->lessonsRepository->create([
             'name' => $name, 
             'slug' => $slug, 
             'video_id' => $videoId, 
+            'course_id' => $courseId, 
             'document_id' => $documentId, 
-            'patent_id' => $patentId, 
+            'parent_id' => $parentId, 
             'is_trial' => $isTrial,
             'position' => $position, 
             'durations' => $videoInfo['playtime_seconds'] ?? 0,

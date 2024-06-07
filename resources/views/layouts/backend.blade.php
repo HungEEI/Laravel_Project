@@ -21,6 +21,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('backend/css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
     @yield('stylesheets')
 
 </head>
@@ -117,6 +118,7 @@
     <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
     <script src="{{asset('backend/plugins/ckeditor/ckeditor.js')}}"></script>
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="{{asset('backend/js/scripts.js')}}"></script>
     <script>
         $('#lfm').filemanager('image');

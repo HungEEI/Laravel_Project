@@ -26,9 +26,12 @@ class LessonRequest extends FormRequest
             'slug' => 'required|max:255|',
             'parent_id' => 'required|integer',
             'is_trial' => 'required|integer',
-            'position' => 'required|integer',
-            'video' => 'required'           
+            'position' => 'required|integer'      
         ];
+
+        if ($this->parent_id !== 0) {
+            $rules['parent_id'] = 'required';
+        }
 
         return $rules;
     }

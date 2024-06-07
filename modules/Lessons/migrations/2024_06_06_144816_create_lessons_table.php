@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug');
             $table->integer('video_id')->unsigned()->nullable();
+            $table->integer('course_id')->unsigned()->nullable();
             $table->integer('document_id')->unsigned()->nullable();
             $table->integer('parent_id')->unsigned()->nullable();
             $table->boolean('is_trial')->default(false);
@@ -28,6 +29,7 @@ return new class extends Migration
 
         Schema::table('lessons', function (Blueprint $table) {
             $table->foreign('video_id')->references('id')->on('videos')->nullOnDelete();
+            $table->foreign('course_id')->references('id')->on('courses')->nullOnDelete();
             $table->foreign('document_id')->references('id')->on('documents')->nullOnDelete();
             $table->foreign('parent_id')->references('id')->on('lessons')->nullOnDelete();
         });

@@ -11,5 +11,14 @@ class LessonsRepository extends BaseRepository implements LessonsRepositoryInter
         return Lesson::class;
     }
 
+    public function getPosition($courseId) {
+        $result = $this->model->where('course_id', $courseId)->count();
+        return $result + 1;
+    }
+
+    public function getAllLessions() {
+        return $this->getAll();
+    }
+
 }
 

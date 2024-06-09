@@ -50,9 +50,9 @@ class CategoriesController extends Controller {
             foreach ($categories as $key => $category) {
                 $row = $category;
                 $row['name'] = $char.$row['name'];
-                $row['edit'] = '<a href="'.route('admin.categories.edit', $category['id']).'" class="btn btn-warning">Sửa</a>';
-                $row['delete'] = '<a href="'.route('admin.categories.delete', $category['id']).'" class="btn btn-danger delete-action">Xóa</a>';
-                $row['link'] = '<a target="_blank" href="/danh-muc/'.$category['slug'].'" class="btn btn-primary">Xem</a>';
+                $row['edit'] = '<a href="'.route('admin.categories.edit', $category['id']).'" class="btn btn-warning btn-sm">Sửa</a>';
+                $row['delete'] = '<a href="'.route('admin.categories.delete', $category['id']).'" class="btn btn-danger delete-action btn-sm">Xóa</a>';
+                $row['link'] = '<a target="_blank" href="/danh-muc/'.$category['slug'].'" class="btn btn-primary btn-sm">Xem</a>';
                 $row['created_at'] = Carbon::parse($category['created_at'])->format('d/m/Y H:i:s');
                 unset($row['sub_categories']);
                 unset($row['updated_at']);

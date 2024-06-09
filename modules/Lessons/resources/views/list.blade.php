@@ -18,8 +18,8 @@
                         <th>Tên</th>
                         <th>Học thử</th>
                         <th>Lượt xem</th>
-                        <th>Thứ tự</th>
-                        <th>Thời gian</th>
+                        <th>Thời lượng</th>
+                        <th>Thêm</th>
                         <th>Sửa</th>
                         <th>Xóa</th>
                     </tr>
@@ -29,4 +29,27 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                autoWith: false,
+                processing: true,
+                serverSide: true,
+                pageLength: 2,
+                ajax: '{{route('admin.lessons.data', $course->id)}}',
+                columns: [
+                    { data: 'name' },
+                    { data: 'is_trial' },
+                    { data: 'view' },
+                    { data: 'durations' },
+                    { data: 'add' },
+                    { data: 'edit' },
+                    { data: 'delete' }
+                ]
+            });
+        });
+    </script>
 @endsection

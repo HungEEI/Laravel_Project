@@ -38,19 +38,19 @@ class CoursesController extends Controller {
 
         return DataTables::of($courses)
         ->addColumn('lessions', function ($course) {
-            return '<a href="'.route('admin.lessons.index', $course).'" class="btn btn-primary">Bài giảng</a>';
+            return '<a href="'.route('admin.lessons.index', $course).'" class="btn btn-primary btn-sm">Bài giảng</a>';
         })
         ->addColumn('edit', function ($course) {
-            return '<a href="'.route('admin.courses.edit', $course).'" class="btn btn-warning">Sửa</a>';
+            return '<a href="'.route('admin.courses.edit', $course).'" class="btn btn-warning btn-sm">Sửa</a>';
         })
         ->addColumn('delete', function ($course) {
-            return '<a href="'.route('admin.courses.delete', $course).'" class="btn btn-danger delete-action">Xóa</a>';
+            return '<a href="'.route('admin.courses.delete', $course).'" class="btn btn-danger delete-action btn-sm">Xóa</a>';
         })
         ->editColumn('created_at', function ($course) {
             return Carbon::parse($course->created_at)->format('d/m/Y H:i:s');
         })
         ->editColumn('status', function ($course) {
-            return $course->status == 1 ? '<button class="btn btn-success">Đã ra mắt</button>' : '<button class="btn btn-warning">Chưa ra mắt</button>';
+            return $course->status == 1 ? '<button class="btn btn-success btn-sm">Đã ra mắt</button>' : '<button class="btn btn-warning btn-sm">Chưa ra mắt</button>';
         })
         ->editColumn('price', function ($course) {
             if ($course->price) {

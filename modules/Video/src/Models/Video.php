@@ -1,8 +1,9 @@
 <?php
 namespace Modules\Video\src\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Lessons\src\Models\Lesson;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Video extends Model
 {
@@ -14,8 +15,15 @@ class Video extends Model
         'size'
         ];
         
-        protected $attributes = [
-            'size' => 0
-        ];
+    protected $attributes = [
+        'size' => 0
+    ];
 
+    public function courses() {
+        return $this->hasMany(
+            Lesson::class,
+            'video_id',
+            'id'
+        );
+    }
 }

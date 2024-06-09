@@ -25,10 +25,10 @@ class TeachersController extends Controller {
 
         $data = DataTables::of($teachers)
         ->addColumn('edit', function ($teachers) {
-            return '<a href="'.route('admin.teachers.edit', $teachers).'" class="btn btn-warning">Sửa</a>';
+            return '<a href="'.route('admin.teachers.edit', $teachers).'" class="btn btn-warning btn-sm">Sửa</a>';
         })
         ->addColumn('delete', function ($teachers) {
-            return '<a href="'.route('admin.teachers.delete', $teachers).'" class="btn btn-danger delete-action">Xóa</a>';
+            return '<a href="'.route('admin.teachers.delete', $teachers).'" class="btn btn-danger delete-action btn-sm">Xóa</a>';
         })
         ->editColumn('created_at', function ($teachers) {
             return Carbon::parse($teachers->created_at)->format('d/m/Y H:i:s');

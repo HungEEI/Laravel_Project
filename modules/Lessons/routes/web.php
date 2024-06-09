@@ -1,6 +1,5 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use Modules\Lessons\src\Http\Controllers\LessonController;
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::prefix('lessons')->name('lessons.')->group(function () {
@@ -8,10 +7,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
         Route::get('/{courseId}/add', 'LessonController@add')->name('add');
 
+        Route::get('/{courseId}/data', 'LessonController@data')->name('data');
+
         Route::post('/{courseId}/add', 'LessonController@store');
 
-        // Route::get('edit/{user}', 'LessonController@edit')->name('edit');
-        // Route::put('edit/{user}', 'LessonController@update')->name('update');
+        Route::get('/edit/{lessonId}', 'LessonController@edit')->name('edit');
+        Route::put('/edit/{lessonId}', 'LessonController@update')->name('update');
 
         // Route::delete('delete/{user}', 'LessonController@delete')->name('delete');
         

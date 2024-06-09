@@ -24,10 +24,10 @@ class UserController extends Controller {
 
         return DataTables::of($users)
         ->addColumn('edit', function ($users) {
-            return '<a href="'.route('admin.users.edit', $users).'" class="btn btn-warning">Sửa</a>';
+            return '<a href="'.route('admin.users.edit', $users).'" class="btn btn-warning btn-sm">Sửa</a>';
         })
         ->addColumn('delete', function ($users) {
-            return '<a href="'.route('admin.users.delete', $users).'" class="btn btn-danger delete-action">Xóa</a>';
+            return '<a href="'.route('admin.users.delete', $users).'" class="btn btn-danger delete-action btn-sm">Xóa</a>';
         })
         ->editColumn('created_at', function ($users) {
             return Carbon::parse($users->created_at)->format('d/m/Y H:i:s');

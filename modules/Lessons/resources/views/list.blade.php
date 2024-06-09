@@ -11,6 +11,7 @@
     <div class="card-body">
         <div class="table-responsive">
             <a href="{{route('admin.courses.index')}}" class="btn btn-info mb-3">Quay lại khóa học</a>
+            <a href="{{route('admin.lessons.sort', $course)}}" class="btn btn-success mb-3">Sắp xếp bài giảng</a>
             <a href="{{route('admin.lessons.add', $course)}}" class="btn btn-primary mb-3">Thêm mới</a>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>

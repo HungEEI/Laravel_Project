@@ -186,4 +186,22 @@ class LessonController extends Controller {
         return back()->with('msg', __('lessons::messages.delete.success'));     
     }
 
+    public function sort(Request $request, $courseId) {
+        $pageTitle = "Sắp xếp bài giảng";
+        $modules = $this->lessonsRepository->getLessons($courseId)->with('children')->get();
+        return view('lessons::sort', compact('pageTitle', 'courseId', 'modules'));
+    }
+
+    public function hanldeSort(Request $request, $courseId) {
+        $lesson = $request->lesson;
+        if ($lesson) {
+            foreach ($lesson as $index => $lessonId) {
+                $this->lessonsRepository->update($lessonId, [
+                    'position' => $index
+                ]);
+            }   
+            return back()->with('msg', __('lessons::messages.update.success')); 
+        }
+    }
+
 }

@@ -101,6 +101,8 @@
     <script src="{{asset('backend/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('backend/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('backend/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
     
     <!-- Core plugin JavaScript-->
     <script src="{{asset('backend/vendor/jquery-easing/jquery.easing.min.js')}}"></script>

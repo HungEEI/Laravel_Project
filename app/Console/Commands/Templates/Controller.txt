@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 
 class {name} extends Controller {
 
-    protected $userRepository;
+    protected ${name}Repository;
     public function __construct() {
        
     }

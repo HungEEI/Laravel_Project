@@ -31,7 +31,7 @@ return new class extends Migration
             $table->foreign('video_id')->references('id')->on('videos')->nullOnDelete();
             $table->foreign('course_id')->references('id')->on('courses')->nullOnDelete();
             $table->foreign('document_id')->references('id')->on('documents')->nullOnDelete();
-            $table->foreign('parent_id')->references('id')->on('lessons')->nullOnDelete();
+            $table->foreign('parent_id')->references('id')->on('lessons')->onDelete('cascade');
         });
 
     }

@@ -51,7 +51,7 @@ class LessonController extends Controller {
                     $row['durations'] = '';  
                     $row['add'] = '<a href="'.route('admin.lessons.add', $row['course_id']).'?module='.$row['id'].'" class="btn btn-primary btn-sm">Thêm bài</a>';
                     $row['edit'] = '<a href="'.route('admin.lessons.edit', $row['id']).'" class="btn btn-warning btn-sm">Sửa</a>';
-                    $row['delete'] = '<a href="" class="btn btn-danger delete-action btn-sm">Xóa</a>';
+                    $row['delete'] = '<a href="'.route('admin.lessons.delete', $row['id']).'" class="btn btn-danger delete-action btn-sm">Xóa</a>';
                     } else {
                         $row['name'] = $char.$row['name'];
                         $row['is_trial'] = ($row['is_trial'] == 1 ? 'Có' : 'Không');
@@ -59,7 +59,7 @@ class LessonController extends Controller {
                         $row['durations'] = $row['durations'].' giây';
                         $row['add'] = '';
                         $row['edit'] = '<a href="'.route('admin.lessons.edit', $row['id']).'" class="btn btn-warning btn-sm">Sửa</a>';
-                        $row['delete'] = '<a href="" class="btn btn-danger delete-action btn-sm">Xóa</a>';
+                        $row['delete'] = '<a href="'.route('admin.lessons.delete', $row['id']).'" class="btn btn-danger delete-action btn-sm">Xóa</a>';
                     }
                 unset($row['sub_lessons']);
                 unset($row['course_id']);
@@ -179,6 +179,11 @@ class LessonController extends Controller {
         ]);
         return redirect()->route('admin.lessons.edit', $lessonId)->with('msg' , __('lessons::messages.update.success'));
     
+    }
+
+    public function delete(Request $request, $lessonId) {
+        $this->lessonsRepository->delete($lessonId);
+        return back()->with('msg', __('lessons::messages.delete.success'));     
     }
 
 }

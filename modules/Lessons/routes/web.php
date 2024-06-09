@@ -14,7 +14,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('/edit/{lessonId}', 'LessonController@edit')->name('edit');
         Route::put('/edit/{lessonId}', 'LessonController@update')->name('update');
 
-        // Route::delete('delete/{user}', 'LessonController@delete')->name('delete');
+        Route::delete('delete/{lessonId}', 'LessonController@delete')->name('delete');
         
     });
 });

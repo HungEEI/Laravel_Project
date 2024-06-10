@@ -1,6 +1,10 @@
 <?php
 namespace Modules\Courses\src\Models;
+
+use App\Models\Scopes\ActiveScope;
+use Modules\Lessons\src\Models\Lesson;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Teachers\src\Models\Teacher;
 use Modules\Categories\src\Models\Category;
 
 class Course extends Model {
@@ -20,8 +24,23 @@ class Course extends Model {
         'status'
     ];
 
+    protected $with = ['teacher', 'lessons'];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new ActiveScope);
+    }
+
     public function categories() {
         return $this->belongsToMany(Category::class,'categories_courses');
+    }
+
+    public function teacher() {
+        return $this->belongsTo(Teacher::class, 'teacher_id', 'id');
+    }
+
+    public function lessons() {
+        return $this->hasMany(Lesson::class, 'course_id', 'id');
     }
     
 }

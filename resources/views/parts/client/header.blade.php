@@ -35,7 +35,7 @@
     </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 <img src="{{asset('client/assets/logo.png')}}" alt="" />
             </a>
             <button

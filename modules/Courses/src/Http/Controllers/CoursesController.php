@@ -99,7 +99,7 @@ class CoursesController extends Controller {
     public function edit($id) {
         $pageTitle = 'Cập nhật khóa học';
 
-        $course = $this->coursesRepository->find($id);
+        $course = $this->coursesRepository->getFindCourse($id);
         $categoryIds = $this->coursesRepository->getRelatedCategoies($course);
         $allCategories = $this->categoriesRepository->getAllCategories();
         $teacher = $this->teachersRepository->getAllTeachers()->get();
@@ -119,10 +119,10 @@ class CoursesController extends Controller {
         if (!$course['price']) {
             $course['price'] = 0;
         }
-        $this->coursesRepository->update($id, $course);
+        $this->coursesRepository->updateCourse($id, $course);
         $categories = $this->getCategories($course);
 
-        $course = $this->coursesRepository->find($id);
+        $course = $this->coursesRepository->getFindCourse($id);
 
         $this->coursesRepository->updateCourseCategories($course, $categories);
 
@@ -131,10 +131,12 @@ class CoursesController extends Controller {
 
     public function delete($id) {
 
-        $course = $this->coursesRepository->find($id);
+        $course = $this->coursesRepository->getFindCourse($id);
         // $this->coursesRepository->deleteCourseCategories($course);
-        $this->coursesRepository->delete($id);
-
+        $status = $this->coursesRepository->deleteCourse($id);
+        if ($status) {
+            deleteFileStorage($course->thumbnail);
+        }
         return back()->with('msg', __('courses::messages.delete.success'));     
     }
 

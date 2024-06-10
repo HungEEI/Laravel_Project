@@ -16,13 +16,20 @@ class LessonsRepository extends BaseRepository implements LessonsRepositoryInter
         return $result + 1;
     }
 
-    public function getAllLessions() {
-        return $this->getAll();
-    }
-
+    
     public function getLessons($courseId) {
         return $this->model->with('subLessons')->whereCourseId($courseId)->whereNull('parent_id')->select(['id', 'name', 'is_trial', 'slug', 'view', 'parent_id', 'durations', 'course_id'])->orderBy('position', 'asc');
     }
+        
+    public function getAllLessons($courseId) {
+        return $this->model->where('course_id', $courseId)->get();
+    }
 
+    public function getLessonCount($course) {
+        return (object) [
+            'module' => $course->lessons()->whereNull('parent_id')->count(),
+            'lesson' => $course->lessons()->whereNotNull('parent_id')->count()
+        ];
+    }
 }
 

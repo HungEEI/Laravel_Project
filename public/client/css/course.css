@@ -18,6 +18,10 @@
 	padding: 0 10px;
 	font-size: 0.9rem;
 }
+
+.sub-header .sub-title a {
+	color: #fff;
+}
 /* all-course */
 .all-course {
 	margin-bottom: 40px;
@@ -40,7 +44,7 @@
 	text-transform: uppercase;
 }
 .all-course .banner-course {
-	width: 100%;
+	width: 50%;
 }
 .all-course .descreption-course {
 	padding: 20px;

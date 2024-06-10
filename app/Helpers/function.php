@@ -27,3 +27,13 @@ function activeSidebar($name, $routeList) {
 function activeMenu($name) {
     return request()->is(trim(route($name, [], false), '/'));
 }
+
+function money($number, $currency = 'đ') {
+    return !empty($number) ? number_format($number, 0, ',', '.').' '.$currency : 'Miễn phí';
+}
+
+function getHour($seconds) {
+    $value = round($seconds / 60);
+
+    return $value . 'h';
+}

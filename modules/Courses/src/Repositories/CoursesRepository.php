@@ -1,6 +1,7 @@
 <?php
 namespace Modules\Courses\src\Repositories;
 
+use App\Models\Scopes\ActiveScope;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\Hash;
 use Modules\Courses\src\Models\Course;
@@ -14,7 +15,11 @@ class CoursesRepository extends BaseRepository implements CoursesRepositoryInter
     }
 
     public function getAllCourses() {
-        return $this->model->select(['id', 'name', 'price', 'sale_price', 'status', 'created_at'])->latest();
+        return $this->model->withoutGlobalScope(ActiveScope::class)->select(['id', 'name', 'price', 'sale_price', 'status', 'created_at'])->latest();
+    }
+
+    public function getFindCourse($id) {
+        return $this->model->withoutGlobalScope(ActiveScope::class)->find($id);
     }
 
     public function createCourseCategories($course, $data = []) {
@@ -34,5 +39,21 @@ class CoursesRepository extends BaseRepository implements CoursesRepositoryInter
         return $course->categories()->detach();
     }
 
+    public function getCourse($limit) {
+        return $this->model->limit($limit)->latest()->paginate($limit);
+    }
+
+    public function deleteCourse($id)
+    {
+        return $this->model->withoutGlobalScope(ActiveScope::class)->where('id', $id)->delete();
+    }
+
+    public function updateCourse($id, $data = []) {
+        $result = $this->getFindCourse($id);
+        if ($result) {
+            return $result->update($data);
+        }
+        return false;
+    }
 }
 

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Storage;
+use Modules\Lessons\src\Repositories\LessonsRepository;
+use Modules\Lessons\src\Repositories\LessonsRepositoryInterface;
 
 function getVideoInfo($url) {
     $getID3 = new \getID3;
@@ -35,3 +37,9 @@ function getTime($seconds) {
     $seconds = $seconds < 10 ? '0'.$seconds : $seconds;
     return "$mins:$seconds";
 } 
+
+function getLessonCount($course) {
+    $lessonRepository = app(LessonsRepositoryInterface::class);
+    
+    return  $lessonRepository->getLessonCount($course);
+}

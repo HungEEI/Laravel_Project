@@ -1,6 +1,7 @@
 <?php
 namespace Modules;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -90,6 +91,8 @@ class ModuleServiceProvider extends ServiceProvider {
                 $this->registerModule($module);
             }
         }
+
+        Paginator::useBootstrapFive();
     }
 
     public function register() {

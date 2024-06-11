@@ -26,7 +26,20 @@
     </main>
 
     @include('parts.client.footer')
+	@yield('scripts')
+	<div class="modal fade" id="modal"">
+		<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
 
+			</div>
+		</div>
+		</div>
+	</div>
 </body>
     <script src="{{asset('client/js/bootstrap.min.js')}}"></script>
 	<script src="{{asset('client/js/jquery.min.js')}}"></script>

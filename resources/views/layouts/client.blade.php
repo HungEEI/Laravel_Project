@@ -15,6 +15,7 @@
 		<link rel="stylesheet" href="{{asset('client/css/home.css')}}" />
 		<link rel="stylesheet" href="{{asset('client/css/course.css')}}" />
 		<link rel="stylesheet" href="{{asset('client/css/course-detail.css')}}" />
+		<link rel="stylesheet" href="{{asset('client/css/video-detail.css')}}" />
 		<link rel="stylesheet" href="{{asset('client/css/footer.css')}}" />
 		<link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
         @yield('stylesheets')
@@ -49,5 +50,6 @@
 	<script src="{{asset('client/js/slider-home.js')}}"></script>
 	<script src="{{asset('client/js/home.js')}}"></script>
 	<script src="{{asset('client/js/accordion.js')}}"></script>
+	<script src="{{asset('client/js/tab.js')}}"></script>
 	<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 </html>

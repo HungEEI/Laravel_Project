@@ -24,7 +24,7 @@ class Course extends Model {
         'status'
     ];
 
-    protected $with = ['teacher', 'lessons'];
+    protected $with = ['teacher'];
 
     protected static function booted(): void
     {

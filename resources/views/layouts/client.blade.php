@@ -34,4 +34,5 @@
 	<script src="{{asset('client/js/slick.min.js')}}"></script>
 	<script src="{{asset('client/js/slider-home.js')}}"></script>
 	<script src="{{asset('client/js/home.js')}}"></script>
+	<script src="{{asset('client/js/accordion.js')}}"></script>
 </html>

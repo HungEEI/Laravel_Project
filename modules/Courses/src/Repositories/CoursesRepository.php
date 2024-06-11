@@ -39,6 +39,10 @@ class CoursesRepository extends BaseRepository implements CoursesRepositoryInter
         return $course->categories()->detach();
     }
 
+    public function getCourseClient($slug) {
+        return $this->model->whereSlug($slug)->first();
+    }
+
     public function getCourse($limit) {
         return $this->model->limit($limit)->latest()->paginate($limit);
     }

@@ -43,3 +43,15 @@ function getLessonCount($course) {
     
     return  $lessonRepository->getLessonCount($course);
 }
+
+function getModuleByPosition($course) {
+    $lessonRepository = app(LessonsRepositoryInterface::class);
+    
+    return  $lessonRepository->getModuleByPosition($course);
+}
+
+function getLessonByPosition($course, $moduleId) {
+    $lessonRepository = app(LessonsRepositoryInterface::class);
+    
+    return  $lessonRepository->getLessonByPosition($course, $moduleId);
+}

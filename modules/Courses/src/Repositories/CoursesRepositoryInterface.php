@@ -10,5 +10,6 @@ interface CoursesRepositoryInterface extends RepositoryInterface {
     function getFindCourse($id);
     function deleteCourse($id);
     function updateCourse($id, $data = []);
+    function getCourseClient($slug);
 
 }

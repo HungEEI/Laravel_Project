@@ -2,7 +2,9 @@
 
 namespace Modules\Courses\src\Http\Controllers\Clients;
 
+use Iman\Streamer\VideoStreamer;
 use App\Console\Commands\Controller;
+use Yajra\DataTables\Utilities\Request;
 use Modules\Lessons\src\Repositories\LessonsRepository;
 use Modules\Courses\src\Repositories\CoursesRepositoryInterface;
 
@@ -49,5 +51,11 @@ class CoursesController extends Controller {
             'success' => true,
             'data' => $lesson
         ];
+    }
+
+    public function streamVideo(Request $request) {
+        $videoPath = $request->video;
+        $path = public_path($videoPath);
+        VideoStreamer::streamFile($path);
     }
 }

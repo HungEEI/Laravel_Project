@@ -53,9 +53,24 @@
                             const videoUrl = data.video.url;
                             modal.show();
                             modalEl.querySelector('.modal-title').innerText = name;
-                            modalEl.querySelector('.modal-body').innerHTML = `<video src="${videoUrl}" width="100%" height="400" controls></video>`;
+                            modalEl.querySelector('.modal-body').innerHTML = `<video 
+                            id="my-video"
+                            class="video-js"
+                            preload="auto"
+                            controls
+                            data-setup="{}">
+                                <source src="/data/stream?video=${videoUrl}" />
+                                <p class="vjs-no-js">
+                                To view this video please enable JavaScript
+                                <a href="https://videojs.com/html5-video-support/" target="_blank"
+                                    >supports HTML5 video</a
+                                >
+                                </p>
+                            </video>`;
                         }).finally(() => {
                             e.target.innerText = initialBtn;
+                            const myVideoEl = modal.querySelector('.modal-body').querySelector('#my-video');
+                            videojs(myVideoEl);
                         });
     
                     });

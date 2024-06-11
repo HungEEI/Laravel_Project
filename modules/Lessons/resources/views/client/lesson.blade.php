@@ -1,5 +1,4 @@
-@foreach (getModuleByPosition($course) as $key => $module)     
-<div class="accordion active title m-0 p-1">     
+@foreach (getModuleByPosition($course) as $key => $module)         
     <div class="accordion-group pb-0">
         <h4 class="accordion-title {{$module->id == $lesson->parent_id ? 'active' : ''}}">{{$module->name}}</h4>
         <div class="accordion-detail" style="display: {{$module->id == $lesson->parent_id ? 'block' : ''}}">
@@ -13,5 +12,4 @@
             @endforeach
         </div>
     </div> 
-</div>
 @endforeach

@@ -40,9 +40,11 @@
                     <p class="document">Tài liệu</p>
                 </div>
                 <div class="group mt-2">
-                    @include('lessons::client.lesson')
+                    <div class="accordion active title m-0 p-1"> 
+                        @include('lessons::client.lesson')
+                    </div>
                     <div class="document-title title">
-                        <p>tài liệu</p>
+                        @include('lessons::client.document')                     
                     </div>
                 </div>
             </div>
